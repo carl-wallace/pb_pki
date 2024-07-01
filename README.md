@@ -46,6 +46,7 @@ The CA certificates and TA certificates for each environment are listed below.
 ### O&M NIPR
 #### Trust anchor certificates
 * DOD_JITC_Root_CA-3.der
+* DOD_JITC_Root_CA-5.der
 * DOD_JITC_Root_CA-6.der
 
 #### Certification authority certificates
@@ -79,36 +80,46 @@ The CA certificates and TA certificates for each environment are listed below.
 
 ### NIPR
 #### Trust anchor certificates
+* DOD_Root_CA-2.der
 * DOD_Root_CA-3.der
+* DOD_Root_CA-4.der
+* DOD_Root_CA-5.der
 * DOD_Root_CA-6.der
 
 #### Certification authority certificates
 * DOD_Derility_CA-1.der
+* DOD_Derility_CA-3.der
+* DOD_Derility_CA-4.der
 * DOD_Email_CA-59.der
 * DOD_Email_CA-62.der
 * DOD_Email_CA-63.der
 * DOD_Email_CA-64.der
 * DOD_Email_CA-65.der
+* DOD_Email_CA-70.der
 * DOD_Email_CA-71.der
+* DOD_Email_CA-72.der
+* DOD_Email_CA-73.der
 * DOD_ID_CA-59.der
 * DOD_ID_CA-62.der
 * DOD_ID_CA-63.der
 * DOD_ID_CA-64.der
 * DOD_ID_CA-65.der
+* DOD_ID_CA-70.der
 * DOD_ID_CA-71.der
-* DOD_Root_CA_2.der
-* DOD_Root_CA_3.der
-* DOD_Root_CA_4.der
-* DOD_Root_CA_5.der
+* DOD_ID_CA-72.der
+* DOD_ID_CA-73.der
 * DOD_SW_CA-60.der
 * DOD_SW_CA-61.der
 * DOD_SW_CA-66.der
 * DOD_SW_CA-67.der
+* DOD_SW_CA-74.der
 * DOD_SW_CA-75.der
 
 ### O&M SIPR
 #### Trust anchor certificates
+* NSS_JITC_Root_CA-1.der
 * NSS_JITC_Root_CA-2.der
+* NSS_JITC_Root_CA-4.der
 
 #### Certification authority certificates
 * NSS_DOD_JITC_Intermediate_CA-1.der
@@ -116,7 +127,6 @@ The CA certificates and TA certificates for each environment are listed below.
 * NSS_DOD_JITC_Intermediate_CA-3.der
 * NSS_DOD_JITC_Subordinate_CA-3.der
 * NSS_DOD_JITC_Subordinate_CA-5.der
-* NSS_JITC_CA-2.der
 * NSS_JITC_CA-4.der
 * NSS_JITC_Derility_CA-1.der
 * NSS_JITC_SW_CA-2.der
@@ -130,10 +140,11 @@ The CA certificates and TA certificates for each environment are listed below.
 
 ### SIPR
 #### Trust anchor certificates
+* NSS_Root_CA-1.der
 * NSS_Root_CA-2.der
+* NSS_Root_CA-4.der
 
 #### Certification authority certificates
-* NSS_CA-2.der
 * NSS_CA-4.der
 * NSS_DOD_Intermediate_CA-1.der
 * NSS_DOD_Intermediate_CA-2.der
@@ -142,9 +153,6 @@ The CA certificates and TA certificates for each environment are listed below.
 * NSS_DOD_Subordinate_CA-5.der
 * NSS_Derility_CA-1.der
 * NSS_Derility_CA-2.der
-* NSS_Root_CA-1.der
-* NSS_Root_CA-2.der
-* NSS_Root_CA-4.der
 * NSS_SW_CA-10.der
 * NSS_SW_CA-2.der
 * NSS_SW_CA-4.der
