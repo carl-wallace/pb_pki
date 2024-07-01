@@ -65,6 +65,13 @@ pub fn prepare_certval_environment(
         };
         ta_store.push(cf);
 
+        let ta_bytes = include_bytes!("../roots/NIPR/om/DOD_JITC_Root_CA-5.der");
+        let cf = CertFile {
+            filename: "om nipr root 5".to_string(),
+            bytes: ta_bytes.to_vec(),
+        };
+        ta_store.push(cf);
+
         let ta_bytes = include_bytes!("../roots/NIPR/om/DOD_JITC_Root_CA-6.der");
         let cf = CertFile {
             filename: "om nipr root 6".to_string(),
@@ -80,9 +87,23 @@ pub fn prepare_certval_environment(
     #[cfg(feature = "om_sipr")]
     if env == "OM_SIPR" {
         acted = true;
+        let ta_bytes = include_bytes!("../roots/SIPR/om/NSS_JITC_Root_CA-1.der");
+        let cf = CertFile {
+            filename: "om sipr root 1".to_string(),
+            bytes: ta_bytes.to_vec(),
+        };
+        ta_store.push(cf);
+
         let ta_bytes = include_bytes!("../roots/SIPR/om/NSS_JITC_Root_CA-2.der");
         let cf = CertFile {
-            filename: "om sipr root".to_string(),
+            filename: "om sipr root 2".to_string(),
+            bytes: ta_bytes.to_vec(),
+        };
+        ta_store.push(cf);
+
+        let ta_bytes = include_bytes!("../roots/SIPR/om/NSS_JITC_Root_CA-4.der");
+        let cf = CertFile {
+            filename: "om sipr root 4".to_string(),
             bytes: ta_bytes.to_vec(),
         };
         ta_store.push(cf);
@@ -102,6 +123,13 @@ pub fn prepare_certval_environment(
         };
         ta_store.push(cf);
 
+        let ta_bytes = include_bytes!("../roots/NIPR/prod/DOD_Root_CA-5.der");
+        let cf = CertFile {
+            filename: "nipr root 5".to_string(),
+            bytes: ta_bytes.to_vec(),
+        };
+        ta_store.push(cf);
+
         let ta_bytes = include_bytes!("../roots/NIPR/prod/DOD_Root_CA-6.der");
         let cf = CertFile {
             filename: "nipr root 6".to_string(),
@@ -117,9 +145,24 @@ pub fn prepare_certval_environment(
     #[cfg(feature = "sipr")]
     if env == "SIPR" {
         acted = true;
+
+        let ta_bytes = include_bytes!("../roots/SIPR/prod/NSS_Root_CA-1.der");
+        let cf = CertFile {
+            filename: "sipr root 1".to_string(),
+            bytes: ta_bytes.to_vec(),
+        };
+        ta_store.push(cf);
+
         let ta_bytes = include_bytes!("../roots/SIPR/prod/NSS_Root_CA-2.der");
         let cf = CertFile {
-            filename: "sipr root".to_string(),
+            filename: "sipr root 2".to_string(),
+            bytes: ta_bytes.to_vec(),
+        };
+        ta_store.push(cf);
+
+        let ta_bytes = include_bytes!("../roots/SIPR/prod/NSS_Root_CA-4.der");
+        let cf = CertFile {
+            filename: "sipr root 4".to_string(),
             bytes: ta_bytes.to_vec(),
         };
         ta_store.push(cf);
@@ -187,6 +230,12 @@ pub fn get_reqwest_client(
             Err(e) => error!("Failed to parse NIPR/om/DoDJITCRootCA3: {e:?}"),
         };
 
+        let ta_bytes = include_bytes!("../roots/NIPR/om/DOD_JITC_Root_CA-5.der");
+        match reqwest::Certificate::from_der(ta_bytes) {
+            Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
+            Err(e) => error!("Failed to parse NIPR/om/DoDJITCRootCA5: {e:?}"),
+        };
+
         let ta_bytes = include_bytes!("../roots/NIPR/om/DOD_JITC_Root_CA-6.der");
         match reqwest::Certificate::from_der(ta_bytes) {
             Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
@@ -195,10 +244,22 @@ pub fn get_reqwest_client(
     }
     #[cfg(feature = "om_sipr")]
     {
+        let ta_bytes = include_bytes!("../roots/SIPR/om/NSS_JITC_Root_CA-1.der");
+        match reqwest::Certificate::from_der(ta_bytes) {
+            Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
+            Err(e) => error!("Failed to parse SIPR/om/NSSJITCRootCA-1: {e:?}"),
+        };
+
         let ta_bytes = include_bytes!("../roots/SIPR/om/NSS_JITC_Root_CA-2.der");
         match reqwest::Certificate::from_der(ta_bytes) {
             Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
             Err(e) => error!("Failed to parse SIPR/om/NSSJITCRootCA-2: {e:?}"),
+        };
+
+        let ta_bytes = include_bytes!("../roots/SIPR/om/NSS_JITC_Root_CA-4.der");
+        match reqwest::Certificate::from_der(ta_bytes) {
+            Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
+            Err(e) => error!("Failed to parse SIPR/om/NSSJITCRootCA-4: {e:?}"),
         };
     }
     #[cfg(feature = "nipr")]
@@ -209,6 +270,12 @@ pub fn get_reqwest_client(
             Err(e) => error!("Failed to parse NIPR/prod/DoDRootCA3: {e:?}"),
         };
 
+        let ta_bytes = include_bytes!("../roots/NIPR/prod/DOD_Root_CA-5.der");
+        match reqwest::Certificate::from_der(ta_bytes) {
+            Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
+            Err(e) => error!("Failed to parse NIPR/prod/DoDRootCA5: {e:?}"),
+        };
+
         let ta_bytes = include_bytes!("../roots/NIPR/prod/DOD_Root_CA-6.der");
         match reqwest::Certificate::from_der(ta_bytes) {
             Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
@@ -217,10 +284,22 @@ pub fn get_reqwest_client(
     }
     #[cfg(feature = "sipr")]
     {
+        let ta_bytes = include_bytes!("../roots/SIPR/prod/NSS_Root_CA-1.der");
+        match reqwest::Certificate::from_der(ta_bytes) {
+            Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
+            Err(e) => error!("Failed to parse SIPR/prod/NSSRootCA-1: {e:?}"),
+        };
+
         let ta_bytes = include_bytes!("../roots/SIPR/prod/NSS_Root_CA-2.der");
         match reqwest::Certificate::from_der(ta_bytes) {
             Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
             Err(e) => error!("Failed to parse SIPR/prod/NSSRootCA-2: {e:?}"),
+        };
+
+        let ta_bytes = include_bytes!("../roots/SIPR/prod/NSS_Root_CA-4.der");
+        match reqwest::Certificate::from_der(ta_bytes) {
+            Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
+            Err(e) => error!("Failed to parse SIPR/prod/NSSRootCA-4: {e:?}"),
         };
     }
 
