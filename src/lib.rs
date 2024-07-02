@@ -214,12 +214,12 @@ pub fn get_reqwest_client(
         let ta_bytes = include_bytes!("../roots/NIPR/dev/DOD_ENG_Root-3.der");
         match reqwest::Certificate::from_der(ta_bytes) {
             Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
-            Err(e) => error!("Failed to parse dev/DoDENGRootCA3DoDENGRootCA3: {e:?}"),
+            Err(e) => error!("Failed to parse dev/DOD_ENG_Root: {e:?}"),
         };
         let ta_bytes = include_bytes!("../roots/NIPR/dev/DOD_ENG_Root-6.der");
         match reqwest::Certificate::from_der(ta_bytes) {
             Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
-            Err(e) => error!("Failed to parse dev/DoDENGRootCA3DoDENGRootCA3: {e:?}"),
+            Err(e) => error!("Failed to parse dev/DOD_ENG_Root: {e:?}"),
         };
     }
     #[cfg(feature = "om_nipr")]
@@ -227,19 +227,19 @@ pub fn get_reqwest_client(
         let ta_bytes = include_bytes!("../roots/NIPR/om/DOD_JITC_Root_CA-3.der");
         match reqwest::Certificate::from_der(ta_bytes) {
             Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
-            Err(e) => error!("Failed to parse NIPR/om/DoDJITCRootCA3: {e:?}"),
+            Err(e) => error!("Failed to parse NIPR/om/DOD_JITC_Root_CA: {e:?}"),
         };
 
         let ta_bytes = include_bytes!("../roots/NIPR/om/DOD_JITC_Root_CA-5.der");
         match reqwest::Certificate::from_der(ta_bytes) {
             Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
-            Err(e) => error!("Failed to parse NIPR/om/DoDJITCRootCA5: {e:?}"),
+            Err(e) => error!("Failed to parse NIPR/om/DOD_JITC_Root_CA: {e:?}"),
         };
 
         let ta_bytes = include_bytes!("../roots/NIPR/om/DOD_JITC_Root_CA-6.der");
         match reqwest::Certificate::from_der(ta_bytes) {
             Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
-            Err(e) => error!("Failed to parse NIPR/om/DoDJITCRootCA6: {e:?}"),
+            Err(e) => error!("Failed to parse NIPR/om/DOD_JITC_Root_CA: {e:?}"),
         };
     }
     #[cfg(feature = "om_sipr")]
@@ -247,19 +247,19 @@ pub fn get_reqwest_client(
         let ta_bytes = include_bytes!("../roots/SIPR/om/NSS_JITC_Root_CA-1.der");
         match reqwest::Certificate::from_der(ta_bytes) {
             Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
-            Err(e) => error!("Failed to parse SIPR/om/NSSJITCRootCA-1: {e:?}"),
+            Err(e) => error!("Failed to parse SIPR/om/NSS_JITC_Root_CA-1: {e:?}"),
         };
 
         let ta_bytes = include_bytes!("../roots/SIPR/om/NSS_JITC_Root_CA-2.der");
         match reqwest::Certificate::from_der(ta_bytes) {
             Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
-            Err(e) => error!("Failed to parse SIPR/om/NSSJITCRootCA-2: {e:?}"),
+            Err(e) => error!("Failed to parse SIPR/om/NSS_JITC_Root_CA-2: {e:?}"),
         };
 
         let ta_bytes = include_bytes!("../roots/SIPR/om/NSS_JITC_Root_CA-4.der");
         match reqwest::Certificate::from_der(ta_bytes) {
             Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
-            Err(e) => error!("Failed to parse SIPR/om/NSSJITCRootCA-4: {e:?}"),
+            Err(e) => error!("Failed to parse SIPR/om/NSS_JITC_Root_CA-4: {e:?}"),
         };
     }
     #[cfg(feature = "nipr")]
@@ -267,19 +267,19 @@ pub fn get_reqwest_client(
         let ta_bytes = include_bytes!("../roots/NIPR/prod/DOD_Root_CA-3.der");
         match reqwest::Certificate::from_der(ta_bytes) {
             Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
-            Err(e) => error!("Failed to parse NIPR/prod/DoDRootCA3: {e:?}"),
+            Err(e) => error!("Failed to parse NIPR/prod/DOD_Root_CA: {e:?}"),
         };
 
         let ta_bytes = include_bytes!("../roots/NIPR/prod/DOD_Root_CA-5.der");
         match reqwest::Certificate::from_der(ta_bytes) {
             Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
-            Err(e) => error!("Failed to parse NIPR/prod/DoDRootCA5: {e:?}"),
+            Err(e) => error!("Failed to parse NIPR/prod/DOD_Root_CA: {e:?}"),
         };
 
         let ta_bytes = include_bytes!("../roots/NIPR/prod/DOD_Root_CA-6.der");
         match reqwest::Certificate::from_der(ta_bytes) {
             Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
-            Err(e) => error!("Failed to parse NIPR/prod/DoDRootCA6: {e:?}"),
+            Err(e) => error!("Failed to parse NIPR/prod/DOD_Root_CA: {e:?}"),
         };
     }
     #[cfg(feature = "sipr")]
@@ -287,19 +287,19 @@ pub fn get_reqwest_client(
         let ta_bytes = include_bytes!("../roots/SIPR/prod/NSS_Root_CA-1.der");
         match reqwest::Certificate::from_der(ta_bytes) {
             Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
-            Err(e) => error!("Failed to parse SIPR/prod/NSSRootCA-1: {e:?}"),
+            Err(e) => error!("Failed to parse SIPR/prod/NSS_Root_CA-1: {e:?}"),
         };
 
         let ta_bytes = include_bytes!("../roots/SIPR/prod/NSS_Root_CA-2.der");
         match reqwest::Certificate::from_der(ta_bytes) {
             Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
-            Err(e) => error!("Failed to parse SIPR/prod/NSSRootCA-2: {e:?}"),
+            Err(e) => error!("Failed to parse SIPR/prod/NSS_Root_CA-2: {e:?}"),
         };
 
         let ta_bytes = include_bytes!("../roots/SIPR/prod/NSS_Root_CA-4.der");
         match reqwest::Certificate::from_der(ta_bytes) {
             Ok(ta_cert) => builder = builder.add_root_certificate(ta_cert),
-            Err(e) => error!("Failed to parse SIPR/prod/NSSRootCA-4: {e:?}"),
+            Err(e) => error!("Failed to parse SIPR/prod/NSS_Root_CA-4: {e:?}"),
         };
     }
 
@@ -321,9 +321,4 @@ pub fn get_reqwest_client(
 )))]
 compile_error! {
     "At least one of feature \"dev\", \"om\", \"om_nipr\", \"om_sipr\", or \"sipr\" must be enabled for this crate."
-}
-
-#[cfg(any(feature = "om_nipr", feature = "nipr"))]
-compile_error! {
-    "The `om_nipr` and `nipr` features are currently disabled until the CA used in those environments has been updated."
 }

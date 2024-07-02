@@ -9,13 +9,13 @@ As with all Purebred apps, information is incorporated into the app for a target
 Unlike apps not written in Rust, a single `pb_pki` build can target multiple environments. Target environments are represented as features
 when `pb_pki` is built. The following environment-related features are available:
 
-| Feature  | Description                 |
-|----------|-----------------------------|
-| dev      | Development environment     |
-| om_nipr* | Test environment for NIPR   |
-| nipr*    | NIPR production environment |
-| om_sipr  | Test environment for SIPR   |
-| sipr     | SIPR production environment |
+| Feature | Description                 |
+|---------|-----------------------------|
+| dev     | Development environment     |
+| om_nipr | Test environment for NIPR   |
+| nipr    | NIPR production environment |
+| om_sipr | Test environment for SIPR   |
+| sipr    | SIPR production environment |
 
 The `dev` feature is the default. At least one environment-related feature must be elected when `pb_pki` is built, else compilation fails.
 Features are additive. For example, either of the following commands can be used to produce a `pb_pki` library that targets dev, om_sipr and sipr.
@@ -23,8 +23,6 @@ Features are additive. For example, either of the following commands can be used
 cargo build --features om_sipr,sipr --release
 cargo build --no-default-features --features dev,om_sipr,sipr --release
 ```
-\* NIPR CAs presently return BER-encoded data, which is not supported by Rust applications using this crate. The NIPR features
-have been temporarily disabled until the NIPR CAs have been updated and return DER-encoded data.
 
 ## Certificates
 The CA certificates and TA certificates for each environment are listed below.
