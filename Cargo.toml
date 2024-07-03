@@ -10,7 +10,7 @@ log = { version = "0.4.21", features = ["std", "serde"] }
 # Networking-related crates
 reqwest = { version = "0.12.4" , features = ["rustls-tls"]}
 
-certval = { git = "https://github.com/carl-wallace/rust-pki.git", features = ["std"], branch = "rel_with_mods"}
+certval = { git = "https://github.com/carl-wallace/rust-pki.git", features = ["std"]}
 
 [features]
 default = ["dev"]
