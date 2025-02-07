@@ -186,24 +186,56 @@ pub fn prepare_certval_environment(
 /// Prepares a `Client` instance configured to use CA certificates and trust anchor certificates
 /// from the environments configured at compile-time. An optional `Identity` can be provided to use
 /// mutually authenticated TLS. Pass `None` as the `identity` parameter for server authenticated TLS.
+/// The configured client will use rustls support, so the identity must be suitable for that purpose.
 ///
 /// ```no_run
 /// use std::fs;
-/// use pb_pki::get_reqwest_client;
+/// use pb_pki::get_reqwest_client_rustls;
 /// use reqwest::header::CONTENT_TYPE;
 ///
 /// let pem_contents : Vec<u8> = fs::read("key.pem").unwrap();
 /// let pkcs8 = reqwest::Identity::from_pem(&pem_contents).unwrap();
-/// let client = get_reqwest_client(30, Some(pkcs8)).unwrap();
+/// let client = get_reqwest_client_rustls(30, Some(pkcs8)).unwrap();
 /// ```
-pub fn get_reqwest_client(
+pub fn get_reqwest_client_rustls(
     timeout_secs: u64,
     identity: Option<Identity>,
 ) -> Result<Client, reqwest::Error> {
-    let mut builder = Client::builder()
-        .timeout(Duration::from_secs(timeout_secs))
-        .use_rustls_tls()
-        .connection_verbose(true);
+    get_reqwest_client(timeout_secs, identity, true)
+}
+
+/// Prepares a `Client` instance configured to use CA certificates and trust anchor certificates
+/// from the environments configured at compile-time. An optional `Identity` can be provided to use
+/// mutually authenticated TLS. Pass `None` as the `identity` parameter for server authenticated TLS.
+/// The configured client will use native-tls support, so the identity must be suitable for that purpose.
+pub fn get_reqwest_client_native(
+    timeout_secs: u64,
+    identity: Option<Identity>,
+) -> Result<Client, reqwest::Error> {
+    get_reqwest_client(timeout_secs, identity, false)
+}
+
+/// Prepares a `Client` instance configured to use CA certificates and trust anchor certificates
+/// from the environments configured at compile-time. An optional `Identity` can be provided to use
+/// mutually authenticated TLS. Pass `None` as the `identity` parameter for server authenticated TLS.
+/// When use_rustls is true, the client is configured to use rustls support. When false, native-tls
+/// support is used.
+fn get_reqwest_client(
+    timeout_secs: u64,
+    identity: Option<Identity>,
+    use_rustls: bool,
+) -> Result<Client, reqwest::Error> {
+    let mut builder = if use_rustls {
+        Client::builder()
+            .timeout(Duration::from_secs(timeout_secs))
+            .use_rustls_tls()
+            .connection_verbose(true)
+    } else {
+        Client::builder()
+            .timeout(Duration::from_secs(timeout_secs))
+            .use_native_tls()
+            .connection_verbose(true)
+    };
 
     if let Some(identity) = identity {
         builder = builder.identity(identity);
@@ -310,6 +342,66 @@ pub fn get_reqwest_client(
             Err(e)
         }
     }
+}
+
+/**
+The `get_roots` function returning all roots included in the library given the elected
+features. It makes no attempt to parse these values as certificates.
+*/
+pub fn get_roots() -> Vec<Vec<u8>> {
+    let mut retval = vec![];
+    #[cfg(feature = "dev")]
+    {
+        let ta_bytes = include_bytes!("../roots/NIPR/dev/DOD_ENG_Root-3.der");
+        retval.push(ta_bytes.to_vec());
+        let ta_bytes = include_bytes!("../roots/NIPR/dev/DOD_ENG_Root-6.der");
+        retval.push(ta_bytes.to_vec());
+    }
+    #[cfg(feature = "om_nipr")]
+    {
+        let ta_bytes = include_bytes!("../roots/NIPR/om/DOD_JITC_Root_CA-3.der");
+        retval.push(ta_bytes.to_vec());
+
+        let ta_bytes = include_bytes!("../roots/NIPR/om/DOD_JITC_Root_CA-5.der");
+        retval.push(ta_bytes.to_vec());
+
+        let ta_bytes = include_bytes!("../roots/NIPR/om/DOD_JITC_Root_CA-6.der");
+        retval.push(ta_bytes.to_vec());
+    }
+    #[cfg(feature = "om_sipr")]
+    {
+        let ta_bytes = include_bytes!("../roots/SIPR/om/NSS_JITC_Root_CA-1.der");
+        retval.push(ta_bytes.to_vec());
+
+        let ta_bytes = include_bytes!("../roots/SIPR/om/NSS_JITC_Root_CA-2.der");
+        retval.push(ta_bytes.to_vec());
+
+        let ta_bytes = include_bytes!("../roots/SIPR/om/NSS_JITC_Root_CA-4.der");
+        retval.push(ta_bytes.to_vec());
+    }
+    #[cfg(feature = "nipr")]
+    {
+        let ta_bytes = include_bytes!("../roots/NIPR/prod/DOD_Root_CA-3.der");
+        retval.push(ta_bytes.to_vec());
+
+        let ta_bytes = include_bytes!("../roots/NIPR/prod/DOD_Root_CA-5.der");
+        retval.push(ta_bytes.to_vec());
+
+        let ta_bytes = include_bytes!("../roots/NIPR/prod/DOD_Root_CA-6.der");
+        retval.push(ta_bytes.to_vec());
+    }
+    #[cfg(feature = "sipr")]
+    {
+        let ta_bytes = include_bytes!("../roots/SIPR/prod/NSS_Root_CA-1.der");
+        retval.push(ta_bytes.to_vec());
+
+        let ta_bytes = include_bytes!("../roots/SIPR/prod/NSS_Root_CA-2.der");
+        retval.push(ta_bytes.to_vec());
+
+        let ta_bytes = include_bytes!("../roots/SIPR/prod/NSS_Root_CA-4.der");
+        retval.push(ta_bytes.to_vec());
+    }
+    retval
 }
 
 #[cfg(not(any(
